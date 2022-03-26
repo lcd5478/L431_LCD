@@ -141,7 +141,7 @@ int main(void)
 //	timeout=HAL_GetTick()-timeout;
 	HAL_RTC_GetTime(&hrtc, &stimestructure, RTC_FORMAT_BIN);
 	HAL_RTC_GetDate(&hrtc, &sdatestructure, RTC_FORMAT_BIN);
-	SEGGER_RTT_printf(0,"TIME=%d:%d\n",stimestructure.Hours,stimestructure.Minutes);
+	SEGGER_RTT_printf(0,"TIME=%d:%d\n:%d",stimestructure.Hours,stimestructure.Minutes,stimestructure.Seconds);
 	SEGGER_RTT_printf(0,"TIME=%d\n",HAL_GetTick());
 //  HAL_GPIO_WritePin(PWR_EN_GPIO_Port,PWR_EN_Pin,GPIO_PIN_RESET);
 	
@@ -232,11 +232,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
-{
-    //SystemClock_Config();  // STOP模式唤醒后默认时钟主频为内部8M时钟，所以要先初始化时钟配置
-    SEGGER_RTT_printf(0,"AlarmAEventCallback\r\n");
-}
 
 
 
