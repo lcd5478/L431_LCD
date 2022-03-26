@@ -3,17 +3,21 @@
         {
             "name": "CubeMX_Config",
             "includePath": [
-                "w:\\CubeIDE\\L431_LCD\\Core\\Inc",
-                "w:\\CubeIDE\\L431_LCD\\Drivers\\STM32L4xx_HAL_Driver\\Inc",
-                "w:\\CubeIDE\\L431_LCD\\Drivers\\STM32L4xx_HAL_Driver\\Inc\\Legacy",
-                "w:\\CubeIDE\\L431_LCD\\Drivers\\CMSIS\\Device\\ST\\STM32L4xx\\Include",
-                "w:\\CubeIDE\\L431_LCD\\Drivers\\CMSIS\\Include",
-                "w:\\CubeIDE\\L431_LCD\\Core\\EPD_W21",
-                "C:\\Keil_v5\\ARM\\ARMCC\\include",
-                "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
-                "w:\\CubeIDE\\L431_LCD\\MDK-ARM",
-                "w:\\CubeIDE\\L431_LCD\\Core\\Src",
-                "w:\\CubeIDE\\L431_LCD\\Drivers\\STM32L4xx_HAL_Driver\\Src"
+                "d:\\Users\\Desktop\\lcde\\Core\\Inc",
+                "d:\\Users\\Desktop\\lcde\\Drivers\\STM32L4xx_HAL_Driver\\Inc",
+                "d:\\Users\\Desktop\\lcde\\Drivers\\STM32L4xx_HAL_Driver\\Inc\\Legacy",
+                "d:\\Users\\Desktop\\lcde\\Drivers\\CMSIS\\Device\\ST\\STM32L4xx\\Include",
+                "d:\\Users\\Desktop\\lcde\\Drivers\\CMSIS\\Include",
+                "d:\\Users\\Desktop\\lcde\\Core\\EPD_W21",
+                "d:\\Users\\Desktop\\lcde\\Core\\RTT",
+                "d:\\Users\\Desktop\\lcde\\Core\\KEY",
+                "d:\\Users\\Desktop\\lcde\\Core\\STH20",
+                "d:\\Users\\Desktop\\lcde\\Core\\GUI",
+                "D:\\Keil_v5\\ARM\\ARMCC\\include",
+                "D:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
+                "d:\\Users\\Desktop\\lcde\\MDK-ARM",
+                "d:\\Users\\Desktop\\lcde\\Core\\Src",
+                "d:\\Users\\Desktop\\lcde\\Drivers\\STM32L4xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",

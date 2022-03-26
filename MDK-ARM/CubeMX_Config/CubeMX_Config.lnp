@@ -1,11 +1,14 @@
---cpu=Cortex-M4.fp.sp --branchpatch=sdcomp-29491-629360
+--cpu=Cortex-M4.fp --branchpatch=sdcomp-29491-629360
 "cubemx_config\startup_stm32l431xx.o"
+"cubemx_config\segger_rtt.o"
+"cubemx_config\segger_rtt_printf.o"
 "cubemx_config\main.o"
 "cubemx_config\gpio.o"
 "cubemx_config\adc.o"
 "cubemx_config\i2c.o"
 "cubemx_config\rtc.o"
 "cubemx_config\spi.o"
+"cubemx_config\tim.o"
 "cubemx_config\usart.o"
 "cubemx_config\stm32l4xx_it.o"
 "cubemx_config\stm32l4xx_hal_msp.o"
@@ -36,6 +39,13 @@
 "cubemx_config\stm32l4xx_hal_uart_ex.o"
 "cubemx_config\system_stm32l4xx.o"
 "cubemx_config\epaper.o"
+"cubemx_config\sht20.o"
+"cubemx_config\display.o"
+"cubemx_config\gui.o"
+"cubemx_config\mainwindow.o"
+"cubemx_config\menuwindow.o"
+"cubemx_config\statusbar.o"
+"cubemx_config\oledops.o"
 --strict --scatter "CubeMX_Config\CubeMX_Config.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

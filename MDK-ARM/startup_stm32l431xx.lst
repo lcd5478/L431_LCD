@@ -613,14 +613,13 @@ ARM Macro Assembler    Page 10
               00001000 
               00001000 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
-interwork --depend=cubemx_config\startup_stm32l431xx.d -ocubemx_config\startup_
-stm32l431xx.o -I.\RTE\_CubeMX_Config -IC:\Users\13645\AppData\Local\Arm\Packs\A
-RM\CMSIS\5.6.0\CMSIS\Core\Include -IC:\Users\13645\AppData\Local\Arm\Packs\Keil
-\STM32L4xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include --predefine="__U
-VISION_VERSION SETA 535" --predefine="_RTE_ SETA 1" --predefine="STM32L431xx SE
-TA 1" --predefine="_RTE_ SETA 1" --list=startup_stm32l431xx.lst startup_stm32l4
-31xx.s
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=cubemx_config\startup_stm32l431xx.d -ocubemx_config\startup_stm
+32l431xx.o -I.\RTE\_CubeMX_Config -ID:\Users\wws\AppData\Local\Arm\Packs\ARM\CM
+SIS\5.5.1\CMSIS\Core\Include -ID:\Users\wws\AppData\Local\Arm\Packs\Keil\STM32L
+4xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32L4xx\Include --predefine="__UVISION_
+VERSION SETA 528" --predefine="_RTE_ SETA 1" --predefine="STM32L431xx SETA 1" -
+-list=startup_stm32l431xx.lst startup_stm32l431xx.s
 
 
 

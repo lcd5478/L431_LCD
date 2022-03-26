@@ -139,6 +139,32 @@ void EPD_ALL_image(const unsigned char *datas1,const unsigned char *datas2)
    EPD_Update();		 
 }
 
+//////////////////////////////All screen update////////////////////////////////////////////
+void EPD_RED_image(const unsigned char *datas2)
+{
+   unsigned int i;
+
+    Epaper_Write_Command(0x26);   //write RAM for black(0)/white (1)
+    for(i=0;i<ALLSCREEN_GRAGHBYTES;i++)
+   {               
+			Epaper_Write_Data(*datas2); 
+			datas2++;
+   }
+   EPD_Update();		 
+}
+
+void EPD_black_image(const unsigned char *datas1)
+{
+   unsigned int i;
+    Epaper_Write_Command(0x24);   //write RAM for black(0)/white (1)
+    for(i=0;i<ALLSCREEN_GRAGHBYTES;i++)
+   {               
+			Epaper_Write_Data(*datas1); 
+			datas1++;
+   }
+   EPD_Update();		 
+}
+	
 
 
 /////////////////////////////////////////////////////////////////////////////////////////

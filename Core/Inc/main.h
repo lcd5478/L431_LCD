@@ -32,19 +32,44 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "epaper.h"
+#include "picture.h"
+typedef enum {FALSE = 0,TRUE = !FALSE} bool;
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
+//ç”µæ± ç”µé‡æšä¸¾
+enum POWER_CAP
+{
+  POWER_NULL = 0, //ç©ºç”µé‡?
+  POWER_LOW,      //ä½ç”µé‡?
+  POWER_MID,      //ä¸?ç”µé??
+  POWER_HIGH,     //é«˜ç”µé‡?
+};
+//å……ç”µçŠ¶æ?æšä¸?
+enum CHRG_ST
+{
+  CHRG_NULL = 0, //æ— å……ç”µå™¨
+  CHRG_ING,      //å……ç”µä¸?
+  CHRG_FIN,      //å……æ»¡å•?
+};
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+//Ò»°ã×´Ì¬Öµ¶¨Òå
+#define WlStateVal			0x1200	//ÎŞÏß×´Ì¬Öµ
 
+#define PowerVal				0x1210	//µçÁ¿×´Ì¬Öµ
+#define ChargeVal				0x1220	//³äµç×´Ì¬Öµ
+#define RtcUpdateVal		0x1230	//RTC¸üĞÂ×´Ì¬Öµ
+
+#define DormancyVal		  0x1240	//RTC¸üĞÂ×´Ì¬Öµ
 /* USER CODE END EC */
 
-/* Exported macro -------.ã€‹ã€‹-----------------------------------------------------*/
+/* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 
 /* USER CODE END EM */
@@ -84,6 +109,11 @@ void Error_Handler(void);
 #define PWR_EN_Pin GPIO_PIN_3
 #define PWR_EN_GPIO_Port GPIOH
 /* USER CODE BEGIN Private defines */
+
+
+
+
+
 
 /* USER CODE END Private defines */
 

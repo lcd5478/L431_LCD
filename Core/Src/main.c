@@ -22,18 +22,23 @@
 #include "i2c.h"
 #include "rtc.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "epaper.h"
-#include "picture.h"
+#include "mainWindow.h"
+#include "SEGGER_RTT_Conf.h"
+#include "SEGGER_RTT.h"
+#include "sht20.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+RTC_DateTypeDef sdatestructure;
+RTC_TimeTypeDef stimestructure;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -59,7 +64,28 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void StandbyRTCMode_Measure(void)
+{ 
 
+  if(HAL_RTCEx_DeactivateWakeUpTimer(&hrtc) != HAL_OK)
+  {
+    /* Initialization Error */
+    Error_Handler(); 
+  }
+  
+  /*## Clear all related wakeup flags ########################################*/  
+  /* Clear RTC Wake Up timer Flag */
+  HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1);
+  __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+  __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(&hrtc, RTC_FLAG_WUTF);
+  
+  /*## Setting the Wake up time ##############################################*/
+  HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0xA017, RTC_WAKEUPCLOCK_RTCCLK_DIV16);
+  HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+  /*## Enter the Standby mode ################################################*/
+  /* Request to enter STANDBY mode  */
+  HAL_PWR_EnterSTANDBYMode(); 
+}
 /* USER CODE END 0 */
 
 /**
@@ -69,7 +95,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	char str[50];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -95,61 +121,54 @@ int main(void)
   MX_ADC1_Init();
   MX_I2C1_Init();
   MX_SPI1_Init();
+  MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(PWR_EN_GPIO_Port,PWR_EN_Pin,GPIO_PIN_SET);
-  EPD_HW_Init(); 
-  EPD_ALL_image(gImage_1_BW,gImage_1_RED);
-  EPD_DeepSleep();
-  HAL_Delay(3000); 
+ // HAL_GPIO_WritePin(PWR_ESP_EN_GPIO_Port,PWR_ESP_EN_Pin,GPIO_PIN_SET);
+  WinInit();
+//  EPD_HW_Init();
+//	int timeout = HAL_GetTick();
+//	EPD_ALL_image(gImage_basemap_BW,gImage_basemap_RED);	//Refresh the picture in full screen
+//	timeout=HAL_GetTick()-timeout;
+//  //EPD_black_image(gImage_1_BW);
+////  EPD_DeepSleep();
+//	SEGGER_RTT_printf(0,"TIME=%d\n",timeout);
+   
+//  EPD_HW_Init(); 
+//  // EPD_RED_image(gImage_1_RED);
+//	timeout = HAL_GetTick();
+//  EPD_DeepSleep();
+//	timeout=HAL_GetTick()-timeout;
+	HAL_RTC_GetTime(&hrtc, &stimestructure, RTC_FORMAT_BIN);
+	HAL_RTC_GetDate(&hrtc, &sdatestructure, RTC_FORMAT_BIN);
+	SEGGER_RTT_printf(0,"TIME=%d:%d\n",stimestructure.Hours,stimestructure.Minutes);
+	SEGGER_RTT_printf(0,"TIME=%d\n",HAL_GetTick());
+//  HAL_GPIO_WritePin(PWR_EN_GPIO_Port,PWR_EN_Pin,GPIO_PIN_RESET);
+	
 
-  EPD_HW_Init(); //Electronic paper initialization
-	EPD_ALL_image(gImage_2_BW,gImage_2_RED);	//Refresh the picture in full screen
-	EPD_DeepSleep();  //Enter deep sleep	
-  HAL_Delay(3000); 
 
-  EPD_HW_Init(); //Electronic paper initialization	
-	EPD_ALL_image(gImage_basemap_BW,gImage_basemap_RED);	//Refresh the picture in full screen
-	EPD_DeepSleep();  //Enter deep sleep	
-  HAL_Delay(3000); 
-
-  int m=0;
-  	for(int k=0;k<1;k++) 
-			{
-				m=k*2;	
-				EPD_HW_Init(); //Electronic paper initialization				
-				EPD_Dis_Part(320,80,Num_MONO[m],MONO,56,56); //x,y,DATA,Resolution 56*56		
-				EPD_DeepSleep();  //Enter deep sleep				
-				HAL_Delay(1000);			
-
-				EPD_HW_Init(); //Electronic paper initialization
-				EPD_Dis_Part(320,140,Num_RED[m+1],RED,56,56); //x,y,DATA,Resolution 56*56		
-				EPD_DeepSleep();  //Enter deep sleep				
-				HAL_Delay(1000);				
-			}
-
-		for(int k=0;k<1;k++) 
-			{
-				m=k*2;	
-				EPD_HW_Init(); //Electronic paper initialization				
-				EPD_Dis_Part_mult(320,80,ABC_MONO[m],ABC_RED[m], //x,y,DATA,Resolution 56*56		
-													320,140,ABC_MONO[m+1],ABC_RED[m+1],
-													56,56);
-				EPD_DeepSleep();  //Enter deep sleep					
-				HAL_Delay(1000);				
-			}			
+ 
 
 ////////////////////////////////////////////////////////////////////////	
 		//Clear screen
 		
-		EPD_HW_Init(); //Electronic paper initialization
-		EPD_WhiteScreen_White();  //Show all white
-		EPD_DeepSleep();  //Enter deep sleep	
+		//  EPD_HW_Init(); //Electronic paper initialization
+		//  EPD_WhiteScreen_White();  //Show all white
+		//  EPD_DeepSleep();  //Enter deep sleep	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+    SHT20_GetValue();
+    sprintf(str,"T=%.2f,H=%.2f\n",sht20_info.tempreture,sht20_info.humidity);
+    SEGGER_RTT_printf(0,str);
+    HAL_Delay(3000);
+    StandbyRTCMode_Measure();
+    // GUI_SendUserMsg( hWin_main, DormancyVal, 0);
+    // GUI_Exec();	//GUI执行函数
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -172,10 +191,12 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Configure LSE Drive Capability
   */
   HAL_PWR_EnableBkUpAccess();
   __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_LOW);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -194,6 +215,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -210,6 +232,14 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
+{
+    //SystemClock_Config();  // STOP模式唤醒后默认时钟主频为内部8M时钟，所以要先初始化时钟配置
+    SEGGER_RTT_printf(0,"AlarmAEventCallback\r\n");
+}
+
+
+
 
 /* USER CODE END 4 */
 
@@ -222,6 +252,7 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
+	SEGGER_RTT_printf(0,"ERR TIME=%d\n",HAL_GetTick());
   while (1)
   {
   }
@@ -244,4 +275,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

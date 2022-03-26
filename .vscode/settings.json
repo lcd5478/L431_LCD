@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "epaper.h": "c"
+        "epaper.h": "c",
+        "key.h": "c",
+        "main.h": "c"
     }
 }

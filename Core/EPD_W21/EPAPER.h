@@ -52,7 +52,8 @@ void EPD_WhiteScreen_Black(void);
 void EPD_WhiteScreen_White(void);
 void EPD_DeepSleep(void);
 //Display 
-
+void EPD_black_image(const unsigned char *datas1);
+void EPD_RED_image(const unsigned char *datas2);
 void EPD_ALL_image(const unsigned char *datas1,const unsigned char *datas2);
 
 void EPD_Dis_Part(unsigned int xstart,unsigned int ystart,const unsigned char * datas,const unsigned char color_mode,unsigned int PART_COLUMN,unsigned int PART_LINE);
