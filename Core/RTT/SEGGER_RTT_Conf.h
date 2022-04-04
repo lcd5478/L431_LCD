@@ -30,7 +30,7 @@
 
 #ifndef BUFFER_SIZE_UP
 #define BUFFER_SIZE_UP                                                                 \
-  (2048)  // Size of the buffer for terminal output of target, up to host (Default: 1k)
+  (2048)  // Size of the buffer for terminal output of target, up to host (Default: 2k)
 #endif
 
 #ifndef BUFFER_SIZE_DOWN

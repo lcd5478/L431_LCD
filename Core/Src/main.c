@@ -123,6 +123,7 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
+	SEGGER_RTT_Init();
   HAL_GPIO_WritePin(PWR_EN_GPIO_Port,PWR_EN_Pin,GPIO_PIN_SET);
  // HAL_GPIO_WritePin(PWR_ESP_EN_GPIO_Port,PWR_ESP_EN_Pin,GPIO_PIN_SET);
   WinInit();
